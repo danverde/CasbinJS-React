@@ -1,8 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import casbinService from './CasbinService';
 
 function App() {
+  const policies: string[] = [
+    "p, alice, *, read",
+    "p, alice, *, write",
+  ];
+
+  casbinService.setPolicies(policies.join('\n'));
+  const isAllowed: boolean = casbinService.enforce('alice', '*', 'read');
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +28,9 @@ function App() {
           Learn React
         </a>
       </header>
+      <main>
+        <h1>{isAllowed}</h1>
+      </main>
     </div>
   );
 }
