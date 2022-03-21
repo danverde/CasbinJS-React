@@ -19,10 +19,11 @@ class CasbinService {
   m = r.sub == p.sub && keyMatch(r.obj, p.obj) && r.act == p.act
   `);
 
-  enforcer: Enforcer = new Enforcer();
+  enforcer: any = null;
 
   setPolicies = (policies: string): void => {
     const adapter = new MemoryAdapter(policies);
+    // const adapter = new StringAdapter(policies);
 
     const enforcerPromise = newEnforcer(this.casbinModel, adapter);
     enforcerPromise.then((enforcer) => this.enforcer = enforcer);
