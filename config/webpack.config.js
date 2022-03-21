@@ -292,11 +292,7 @@ module.exports = function (webpackEnv) {
     },
     resolve: {
       fallback: {
-        "fs": false,
         "path": false,
-        "stream": false,
-        "buffer": false,
-        "process": false
       },
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
@@ -351,12 +347,7 @@ module.exports = function (webpackEnv) {
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
           loader: require.resolve('source-map-loader'),
           options: {
-            filterSourceMappingUrl: (url, resourcePath) => {
-              if (/.*\/node_modules\/.*/.test(resourcePath)) {
-                return true
-              }
-              return false
-            }
+            filterSourceMappingUrl: (url, resourcePath) => /.*\/node_modules\/.*/.test(resourcePath)
           }
         },
         {
