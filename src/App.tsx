@@ -11,7 +11,6 @@ function App() {
   ];
 
   CasbinService.setPolicies(policies.join('\n'));
-  // const isAllowed: boolean = casbinService.enforce('alice', '*', 'read');
 
   useEffect(() => {
     console.log('effects hurt my brain')
