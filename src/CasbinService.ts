@@ -1,8 +1,8 @@
-import casbin, { Enforcer, MemoryAdapter, newModel } from 'casbin.js';
+import { Enforcer, MemoryAdapter, Model, newEnforcer, newModel } from 'casbin.js';
 
 class CasbinService {
 
-  casbinModel: casbin.Model = newModel(`
+  casbinModel: Model = newModel(`
   [request_definition]
   r = sub, obj, act
 
@@ -19,12 +19,13 @@ class CasbinService {
   m = r.sub == p.sub && keyMatch(r.obj, p.obj) && r.act == p.act
   `);
 
-  enforcer: Enforcer = new Enforcer();
+  enforcer: any = null;
 
   setPolicies = (policies: string): void => {
     const adapter = new MemoryAdapter(policies);
+    // const adapter = new StringAdapter(policies);
 
-    const enforcerPromise = casbin.newEnforcer(this.casbinModel, adapter);
+    const enforcerPromise = newEnforcer(this.casbinModel, adapter);
     enforcerPromise.then((enforcer) => this.enforcer = enforcer);
   };
 
